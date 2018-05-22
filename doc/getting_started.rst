@@ -6,15 +6,80 @@ GETTING STARTED
 Project Repository
 ==================
 
-First of all, you need a project repository. For that, you can just clone
-this repository or start a new one. As a Git Submodule you should add the
-`ansible-roles`_ as ``roles/``:
+Change to your Ansible directory and add all the roles via Galaxy. If you do not already have a project start a new one:
 
 ::
 
-  git init
-  git commit -m 'Intial commit.' --allow-empty
-  git submodule add https://github.com/adfinis-sygroup/ansible-roles adfinis-roles
+  git init $PROJECT_ROOT/
+  cd $PROJECT_ROOT/
+  git commit --allow-empty -m 'Initial commit.'
+
+Add the adfinis-roles directory to the Ansible config and download all roles via Galaxy:
+
+::
+
+  cat <<__EOF__ > ansible.cfg
+  [defaults]
+  roles_path = ./adfinis-roles
+  __EOF__
+  cat <<__EOF__ > requirements.yml
+  ---
+  # -*- coding: utf-8 -*-
+   - src: adfinis-sygroup.ansible
+    version: master
+  - src: adfinis-sygroup.console
+    version: master
+  - src: adfinis-sygroup.docker
+    version: master
+  - src: adfinis-sygroup.grub
+    version: master
+  - src: adfinis-sygroup.hostname
+    version: master
+  - src: adfinis-sygroup.hwraid
+    version: master
+  - src: adfinis-sygroup.hw_vm_tools
+    version: master
+  - src: adfinis-sygroup.ipmi
+    version: master
+  - src: adfinis-sygroup.iptables
+    version: master
+  - src: adfinis-sygroup.mariadb
+    version: master
+  - src: adfinis-sygroup.motd
+    version: master
+  - src: adfinis-sygroup.network
+    version: master
+  - src: adfinis-sygroup.nginx
+    version: master
+  - src: adfinis-sygroup.nodejs
+    version: master
+  - src: adfinis-sygroup.ntp
+    version: master
+  - src: adfinis-sygroup.pkg_mirror
+    version: master
+  - src: adfinis-sygroup.pki
+    version: master
+  - src: adfinis-sygroup.postfix
+    version: master
+  - src: adfinis-sygroup.rpcbind
+    version: master
+  - src: adfinis-sygroup.rsyslog
+    version: master
+  - src: adfinis-sygroup.snmp
+    version: master
+  - src: adfinis-sygroup.ssh
+    version: master
+  - src: adfinis-sygroup.telegraf
+    version: master
+  - src: adfinis-sygroup.upgrade
+    version: master
+  - src: adfinis-sygroup.users
+    version: master
+
+   # vim: set ts=2 sw=2 :
+  __EOF__
+  ansible-galaxy install -r requirements.yml
+
 
 Create the main playbook ``site.yml`` with content along the following
 example. Add your roles as needed:
